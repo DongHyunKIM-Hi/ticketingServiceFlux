@@ -1,0 +1,21 @@
+package org.example.ticketingserviceflux.controller.exception;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import reactor.core.publisher.Mono;
+
+@RestControllerAdvice
+public class ApplicationAdvice {
+
+    @ExceptionHandler(ApiException.class)
+    Mono<ResponseEntity<ServerExceptionResponse >> applicationExceptionHandler(ApiException e) {
+
+        return Mono.just(ResponseEntity.status(e.getHttpStatus())
+                .body(new ServerExceptionResponse(e.getCode(),e.getReason())));
+    }
+
+    public record ServerExceptionResponse(String code, String reason) {
+
+    }
+}
