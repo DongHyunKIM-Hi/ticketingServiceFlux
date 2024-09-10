@@ -1,6 +1,8 @@
 package org.example.ticketingserviceflux.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.ticketingserviceflux.dto.AllowUserResponse;
+import org.example.ticketingserviceflux.dto.AllowedUserResponse;
 import org.example.ticketingserviceflux.dto.RegisterUserResponse;
 import org.example.ticketingserviceflux.service.UserQueueService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,4 +25,17 @@ public class UserQueueController {
             .map(RegisterUserResponse::new);
     }
 
+    @PostMapping("/allow")
+    public Mono<AllowUserResponse> allowUser(@RequestParam(name = "count") Long count,
+        @RequestParam(name = "queueName", defaultValue = "default") String queueName) {
+        return userQueueService.allowUser(queueName,count)
+            .map(allowed -> new AllowUserResponse(count, allowed));
+    }
+
+    @PostMapping("/allowed")
+    public Mono<AllowedUserResponse> allowedUser(@RequestParam long userId,
+        @RequestParam(name = "queueName", defaultValue = "default") String queueName) {
+        return userQueueService.isAllowed(queueName,userId)
+            .map(AllowedUserResponse::new);
+    }
 }

@@ -1,4 +1,4 @@
-package org.example.ticketingserviceflux.controller.exception;
+package org.example.ticketingserviceflux.exception;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

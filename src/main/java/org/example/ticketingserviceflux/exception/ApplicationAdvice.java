@@ -1,4 +1,4 @@
-package org.example.ticketingserviceflux.controller.exception;
+package org.example.ticketingserviceflux.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
