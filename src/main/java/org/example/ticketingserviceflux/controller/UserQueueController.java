@@ -3,8 +3,10 @@ package org.example.ticketingserviceflux.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.ticketingserviceflux.dto.AllowUserResponse;
 import org.example.ticketingserviceflux.dto.AllowedUserResponse;
+import org.example.ticketingserviceflux.dto.RankUserResponse;
 import org.example.ticketingserviceflux.dto.RegisterUserResponse;
 import org.example.ticketingserviceflux.service.UserQueueService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,5 +39,12 @@ public class UserQueueController {
         @RequestParam(name = "queueName", defaultValue = "default") String queueName) {
         return userQueueService.isAllowed(queueName,userId)
             .map(AllowedUserResponse::new);
+    }
+
+    @GetMapping("/rank")
+    public Mono<RankUserResponse> getRank(@RequestParam long userId,
+        @RequestParam(name = "queueName", defaultValue = "default") String queueName) {
+        return userQueueService.getRank(queueName,userId)
+            .map(RankUserResponse::new);
     }
 }
